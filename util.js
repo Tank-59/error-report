@@ -17,7 +17,7 @@ export const formatComponentName = (vm) => {
     )
   }
   
-  // 设备信息 Android iOS PC
+  // 设备信息 Android iOS PC, 可通过后端日志处理不需要前端上报
   export const getDevices = () => {
     const ua = navigator.userAgent
     let isIPad = false
