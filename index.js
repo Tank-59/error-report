@@ -4,14 +4,34 @@ import {formatComponentName, getDevices} from './util'
 let userData = sessionStorage.getItem('userData') ? JSON.parse(decodeURIComponent(sessionStorage.getItem('userData'))) : {}
 // 基础上报信息
 let baseInfo = {
-    timeStamp: Date.now(),
-    pageUrl: window.location.href,
     appId: 3,
     projectName: '管理平台',
     logType: 0,
     userId: userData.userId || 'unknown',
     device: getDevices()
 }
+/**
+ * 错误上报配置
+ * @param errReport
+ */
+function sendErrorMsg (errReport) {
+    let errorReport = {
+      ...baseInfo,
+      timeStamp: Date.now(),
+      pageUrl: window.location.href,
+      params: errReport,
+    }
+    // console.log({errorReport});
+    const reportUrl =
+      window.location.hostname.indexOf('dev') > -1
+        ? 'https://alys-errorlogs.***.com?'
+        : 'http://alys-errorlogs.***.com?'
+    let p = new Image();
+    p.onload = p.onerror = p.onabort = function () {
+      p = p.onload = p.onerror = p.onabort = null
+    }
+    p.src = `${reportUrl}error-logs=${encodeURIComponent(JSON.stringify(errorReport))}`;
+  }
 
 /**
  * 错误上报初始化
