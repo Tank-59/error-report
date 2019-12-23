@@ -67,3 +67,23 @@ export const debounce = (func, wait, immediate) => {
       }
   }
 }
+
+  // 节流
+  function throttling(fn, wait, maxTimelong) {
+      var timeout = null,
+          startTime = Date.parse(new Date);
+      return function () {
+          let that = this;
+          let args = arguments;
+          if (timeout !== null) clearTimeout(timeout);
+          var curTime = Date.parse(new Date);
+          if (curTime - startTime >= maxTimelong) {
+              fn.apply(that,args);
+              startTime = curTime;
+          } else {
+              timeout = setTimeout(()=>{
+                  fn.apply(that,args);
+              }, wait);
+          }
+      }
+  }
