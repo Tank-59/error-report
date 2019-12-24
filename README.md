@@ -8,3 +8,10 @@
    initErrorReport()
 
 ```
+React
+```
+<ErrorBoundary>
+    <ErrorTest>
+    <BuggyCounter/>    
+<ErrorBoundary/>
+```
